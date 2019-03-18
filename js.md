@@ -194,3 +194,27 @@ trim 就是删除写入的字符串的首位空格
 
 ### === 
 ![avatar](./imgs/1.jpg)
+
+### async/await
+async function 声明用于定义一个返回 AsyncFunction 对象的异步函数。异步函数是指通过事件循环异步执行的函数，它会通过一个隐式的 Promise 返回其结果。但是如果你的代码使用了异步函数，它的语法和结构会更像是标准的同步函数。
+**让异步看上去更像同步**
+~~~js
+    举个demo吧，MDN的原例子
+    function fn1(){
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('123')
+            }, 1000)
+        })
+    }
+    async function callBack(){
+        var a = await fn1();
+        console.log(a)
+    }
+    callBack()   // => 123
+    // 吐槽一句这种写法看的贼鸡儿难受
+~~~
+### 如何手写一个pormise
+~~~js
+
+~~~
