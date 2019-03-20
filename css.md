@@ -50,16 +50,16 @@ BFC(block ormatting content)块级格式化上下文
 #### 父级属性
 - flex-direction 主轴方向
 - flex-wrap 一行排序或者分行排序直接改变内部元素大小
-- flex-flow 后面参数 <flex-direction> <flex-wrap>
+- flex-flow 后面参数 *flex-direction* *flex-wrap*
 - justify-content 主轴对其方式(居中/两端对齐/间隔相等)
 - align-item 交叉轴上如何对齐
-- align-centen 多根轴线（多行）的对齐方式。如果项目只有一根轴线
+- align-centent 多根轴线（多行）的对齐方式。如果项目只有一根轴线
 #### 项目属性
 - order 排列顺序，默认都是0
 - flex-grow 放大比例 等分区域
 - flex-shrink 缩小比例
 - flex-basis 分配空间之前占主轴的空间
-- flex <flex-grow> <flex-shrink><flex-basis>   可能这个会被问
+- flex *flex-grow* *flex-shrink* *flex-basis*  可能这个会被问
 ### 写一个随着页面缩放的正方形
 - width: 30%; height: 30vw;
 ### CSS选择器

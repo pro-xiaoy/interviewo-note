@@ -11,6 +11,8 @@
 ### dom
 [dom](https://github.com/pro-xiaoy/written/blob/master/dom.md)
 
+### http
+[http](https://github.com/pro-xiaoy/written/blob/master/http.md)
 ### vue
 
 

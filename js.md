@@ -81,20 +81,30 @@
 先说下个人理解把，节流（throttle）相当于游戏里面的技能CD，那么我们稍微写下这个函数
 ~~~js
     function throttle(fn, delay) {
-        let last;
-        let timer;
+        // let last;
+        // let timer;
+        // return function(){
+        //     let now = +new Date()
+        //     let _this = this;
+        //     if (last && now < last + delay) {
+        //         clearTimeout(timer);
+        //         timer = setTimeout(function(){
+        //             last = now
+        //             fn.call(_this, arguments)
+        //         }, delay)
+        //     }else {
+        //         last = now
+        //         fn.apply(_this, args)
+        //     }
+        // }
+        let use = true;
         return function(){
-            let now = +new Date()
-            let _this = this;
-            if (last && now < last + delay) {
-                clearTimeout(timer);
-                timer = setTimeout(function(){
-                    last = now
-                    fn.call(_this, arguments)
+            if(use) {
+                fn.call(this, arguments);
+                use = false
+                setTimeout(function() {
+                    use = true
                 }, delay)
-            }else {
-                last = now
-                fn.apply(_this, args)
             }
         }
     }
