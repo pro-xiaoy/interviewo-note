@@ -6,5 +6,5 @@
 - 用text写文本，要不就是帅选可疑实体
 
 ### csrf
-> cross-site request forgery跨站请求伪造
+> cross-site request forgery 跨站请求伪造
 - 模拟别人token 伪造用户
