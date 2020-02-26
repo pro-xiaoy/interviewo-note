@@ -109,7 +109,7 @@
         }
     }
 ~~~
-防抖（debounce）送外卖吧，收到一单5分钟以后开始送，无论中间多少，反正就是五分钟
+防抖（debounce）理解为输入框多少秒以后查询，你输入一个查询重新开始，上一个查询结束，一直这样下去.
 ~~~ js
     function debounce(fn, delay){
         let timer;
