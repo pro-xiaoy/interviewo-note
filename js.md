@@ -226,22 +226,38 @@ async function 声明用于定义一个返回 AsyncFunction 对象的异步函�
 ~~~
 ### 如何手写一个pormise
 ~~~js
-    function promise(constro) {
-        var _this = this;
-        _this.status = 'pending'
-        _this.result;
-        _this.reson;
-        function resolve(value) {
-            if(_this.status === 'pending') {
-                _this.status = 'resolve';
-                _this.result = value
-            }
-        }
-        function reject(value) {
-            if(_this.status === 'pending') {
-                _this.status = 'reject';
-                _this.reson = value
-            }
-        }
+   // promise
+function myPromise(virtualfn) {
+  let _this = this
+  this.status = 'pending'
+  this.result = undefined
+  this.reson = undefined
+
+  function resolve(value) {
+    if (_this.status === 'pending') {
+      _this.status = 'resolve';
+      _this.result = value
     }
+  }
+  function reject(value) {
+    if (_this.status === 'pending') {
+      _this.status = 'reject';
+      _this.reson = value
+    }
+  }
+  
+  return virtualfn(resolve,reject)
+
+}
+myPromise.prototype.then = function (onFufiled, onRejected){
+  let self = this;
+  console.log('self', self)
+    if(self.status === 'resolve'){
+      console.log('true')
+        onFufiled(self.result);
+    }
+    if(self.status === 'reject'){
+        onRejected(self.reson);
+    }
+}
 ~~~
