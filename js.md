@@ -81,22 +81,6 @@
 先说下个人理解把，节流（throttle）相当于游戏里面的技能CD，那么我们稍微写下这个函数
 ~~~js
     function throttle(fn, delay) {
-        // let last;
-        // let timer;
-        // return function(){
-        //     let now = +new Date()
-        //     let _this = this;
-        //     if (last && now < last + delay) {
-        //         clearTimeout(timer);
-        //         timer = setTimeout(function(){
-        //             last = now
-        //             fn.call(_this, arguments)
-        //         }, delay)
-        //     }else {
-        //         last = now
-        //         fn.apply(_this, args)
-        //     }
-        // }
         let use = true;
         return function(){
             if(use) {
@@ -227,37 +211,47 @@ async function 声明用于定义一个返回 AsyncFunction 对象的异步函�
 ### 如何手写一个pormise
 ~~~js
    // promise
-function myPromise(virtualfn) {
+  function myPromise(constron) {
   let _this = this
-  this.status = 'pending'
-  this.result = undefined
-  this.reson = undefined
+  _this.status ='pending'
+  _this.result = undefined
+  _this.reson = undefined
 
-  function resolve(value) {
-    if (_this.status === 'pending') {
-      _this.status = 'resolve';
-      _this.result = value
-    }
-  }
-  function reject(value) {
-    if (_this.status === 'pending') {
-      _this.status = 'reject';
-      _this.reson = value
-    }
-  }
-  
-  return virtualfn(resolve,reject)
+  // 增加队列处理异步方法
+  this.resolveCallBack = []
+  this.rejectCallBack = []
 
+  function resolve(val) {
+    _this.status = 'resolve'
+    _this.result = val
+    _this.resolveCallBack.forEach(cb => {
+      cb()
+    });
+  }
+  function reject(val) {
+    _this.status = 'reject'
+    _this.reson = val
+    _this.rejectCallBack.forEach(cb => {
+      cb()
+    });
+  }
+  constron(resolve, reject)
 }
-myPromise.prototype.then = function (onFufiled, onRejected){
-  let self = this;
-  console.log('self', self)
-    if(self.status === 'resolve'){
-      console.log('true')
-        onFufiled(self.result);
+myPromise.prototype.then = function(resolve, reject){
+  let _this = this
+  if(_this.status == 'pending') {
+    if(resolve) {
+      _this.resolveCallBack.push(()=> resolve(_this.result));
     }
-    if(self.status === 'reject'){
-        onRejected(self.reson);
+    if(reject) {
+      _this.resolveCallBack.push(reject(_this.reson));
     }
+  }
+  if(_this.status == 'resolve') {
+    resolve(_this.result)
+  }
+  if(_this.status == 'reject') {
+    reject(_this.reson)
+  }
 }
 ~~~
