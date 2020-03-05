@@ -27,6 +27,8 @@
 - 父子： $on('name', method(value))  $emit('name', data)
 - 爷孙就多用几个$on
 - 多组间通信就vuex/eventBus
+- provide / inject
+- $parent/$child
 
 ### $nextTick什么时候使用
 **在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。**
