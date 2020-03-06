@@ -31,6 +31,7 @@ loader从本质上来说其实就是一个node模块。相当于一台榨汁机(
 
 3. 基础的js  手写promise, generator， call , bind , apply ，filter, map, reduce等等
 ```js
+1. promise
 function MyPromise(constru) {
  this.status = 'pednging'
  this.reson = undefined
@@ -40,21 +41,27 @@ function MyPromise(constru) {
  let resolvefn = function(value) {
     this.status = 'resolve'
     this.reson = value
+    this.resonarr.forEach(cb=> cb())
  }
   let rejectfn = function(value) {
     this.status = 'reject'
     this.result = value
+     this.resultarr.forEach(cb=> cb())
  }
  constru(resolvefn, rejectfn)
 }
 MyPromise.prototype.then=function(resolve, reject) {
   if(this.status = 'pednging') {
-    this.resonarr.push(() => {
-      resolve(this.reson)
-    })
-     this.resultarr.push(() => {
+    if(resolve) {
+      this.resonarr.push(() => {
+        resolve(this.reson)
+      })
+    }
+    if(reject) {
+      this.resultarr.push(() => {
         reject(this.result)
-    })
+      })
+    } 
   }
   if(this.status == 'resolve') {
     resolve(this.reson)
@@ -63,31 +70,105 @@ MyPromise.prototype.then=function(resolve, reject) {
     resolve(this
   }
 }
+2. generator(暂存性)
+
+3. call , bind , apply ，
+
+Function.prototype.mycall = function(content) {
+  content._fn = this
+  content._fn(content)
+}
+Function.prototype.myapply = function(content, arr) {
+  content._fn = this
+  content._fn(...arr)
+  delete content._fn 
+}
+// bind的区别就是bind返回值是一个函数必须在次调用一下
+Function.prototype.mybind = function(content) {
+  let _this = this
+  // return content()
+  var args = Array.prototype.slice.call(arguments,1); // 后参数
+  var temp = function(){}
+  var result = function() {
+    return _this.call(temp instanceof this ?this :content ,args.concat(Array.prototype.slice.call(arguments)) ) 
+  }
+  temp.prototype = this.prototype
+  result.prototype = new temp();
+  return result
+}
+
+4. filter, map, reduce
+filter过滤属性和find区别就是，find找到了就return
+
+Array.prototype.myfilter = function (fn) {
+  let newArr = [];
+  for (var i = 0; i < this.length; i++) {
+    fn(i) && newArr.push(this[i]);
+  }
+  return newArr;
+}
+map:
+Array.prototype.mymap = function(fn) {
+  let newArr = [];
+  for (var i = 0; i < this.length; i++) {
+    newArr.push(this[i]);
+  }
+  return newArr;
+}
 ```
 
 
-4. 自定义事件 / DOM / BFC(块级格式化上下文)
+
+### 4. 自定义事件 / DOM / BFC(块级格式化上下文)
+```js
+CustomEvent
+DOM
+```
+
 5. 浏览器渲染过程 ｜｜各种状态码 ｜｜  缓存机制
+```js
+  浏览器拿到render tree的时候计算节点的位置（回流），对各个位置进行渲染（重绘）
+  触发回流： 首次渲染，dom节点的的位置改变，删除添加dom‘
+  触发重绘制： 颜色改变呀，文字改变呀，位置不变就行
+```
 6. setTimeout 和 setImmedate 区别
+```js
+setImmedate MDN 不推荐基本属于node那一层，
+说一下我理解的chrome范畴的宏观任务和微观任务
+基本上同步的代码执行完就会执行微观任务（promise.then）
+宏观任务最后执行（setTimeout）
+
+```
 7. vue中 v-for  key 原理和作用
 8. 虚拟dom 作用， diff算法
 9. vuex  使用
 10. js 宏任务 微任务
 11. vue nextTick使用场景
+```js
+dom加载完后续的回掉函数/更新循环结束之后执行延迟回调
+```
 ### 12. vue 中 mounted create 有什么区别
 * create在vue实例化结束对data进行oberver以及watch/copmputed钩子加载
 * mountedcpmplite创建的vm.$el挂载到$el上。
 
 13. webpack 怎么打包优化
 14. 事件队列 Event Loop
+```js
+js语言在内存中的以栈堆的形式出现，栈存储引用类型的值，堆存储基础数据类型和引用类型的指向
+在js引擎加载的时候，因为js是单线程的，会从上往下的执行下去，当他发现一个异步操作的时候会丢到栈队列中
+在同步执行完毕后，走异步的栈堆
+异步这里面分为宏观任务和微观任务
+先执行微观任务(promise)在走宏观任务(计时器)
+
+```
 15. 手写 判断对象是否相等
+```js
+
+```
 16. 手写深度拷贝
-
-
-1. 公司上下班（8:30 - 6:00）
-2. 公司公积金 ()
-3. 年终奖(0.5-1)/绩效()/项目提成()
-4. 团建
-5. 公司对我这个职位的期望是什么？
-6. 这个职位未来几年的职业发展是怎样的？
-7. 为了胜任这个岗位我还需要学习哪些技术知识？
+```js
+浅拷贝直接赋值
+1、基本数据类型的特点：直接存储在栈(stack)中的数据
+2、引用数据类型的特点：存储的是该对象在栈中引用，真实的数据存放在堆内存里
+所以你一般指向的基本上都是
+```
