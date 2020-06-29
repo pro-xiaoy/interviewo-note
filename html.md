@@ -12,5 +12,6 @@
 ### html5的标签有哪些
 - 文档标签,header footer main article nav
 - 功能标签 canvas video audio
+**目的：** 增加SEO（搜索）
 ### h5是什么
 - 在我看来h5就是可以在微信上打开的页面
